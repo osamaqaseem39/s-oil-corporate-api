@@ -20,7 +20,7 @@ export class UploadsController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: memoryStorage(),
-      limits: { fileSize: 8 * 1024 * 1024 },
+      limits: { fileSize: 10 * 1024 * 1024 },
     }),
   )
   async upload(@UploadedFile() file?: Express.Multer.File) {
@@ -28,6 +28,10 @@ export class UploadsController {
     if (!file.mimetype.startsWith('image/')) {
       throw new BadRequestException('Only images are allowed');
     }
-    return this.uploads.uploadBuffer(file.buffer, file.originalname);
+    return this.uploads.uploadBuffer(
+      file.buffer,
+      file.originalname,
+      file.mimetype,
+    );
   }
 }

@@ -27,8 +27,9 @@ Runs at `http://localhost:4000` by default. Production: **https://s-oil-corporat
 | `ADMIN_EMAIL` | Seed admin login email |
 | `ADMIN_PASSWORD` | Seed admin login password |
 | `CORS_ORIGIN` | Comma-separated allowed origins (website + dashboard URLs) |
-| `UPLOAD_DIR` | Local folder for uploaded files |
+| `UPLOAD_DIR` | Local folder for uploaded files (dev fallback) |
 | `PUBLIC_UPLOAD_URL` | Public base URL for uploaded files |
+| `MEDIA_UPLOAD_URL` | External PHP upload endpoint (production on Vercel) |
 
 ## Deploy
 
@@ -50,7 +51,8 @@ Set these in your host dashboard before deploy:
 | `ADMIN_EMAIL` | Yes | Admin login email (seeded on first boot) |
 | `ADMIN_PASSWORD` | Yes | Admin login password |
 | `CORS_ORIGIN` | Yes | `https://s-oil-corporate.vercel.app,https://s-oil-corporate-dashboard.vercel.app` |
-| `PUBLIC_UPLOAD_URL` | Yes | `https://s-oil-corporate-api.vercel.app/uploads` |
+| `PUBLIC_UPLOAD_URL` | Yes | `https://soil-media.osamaqaseem.online/uploads` |
+| `MEDIA_UPLOAD_URL` | Yes (Vercel) | `https://soil-media.osamaqaseem.online/upload.php` |
 | `UPLOAD_DIR` | No | `uploads` (default) |
 | `PORT` | No | Set automatically on most hosts |
 
