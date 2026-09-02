@@ -26,10 +26,8 @@ Runs at `http://localhost:4000` by default. Production: **https://s-oil-corporat
 | `PORT` | API port (default `4000`) |
 | `ADMIN_EMAIL` | Seed admin login email |
 | `ADMIN_PASSWORD` | Seed admin login password |
-| `CORS_ORIGIN` | Comma-separated allowed origins (website + dashboard URLs) |
-| `UPLOAD_DIR` | Local folder for uploaded files (dev fallback) |
-| `PUBLIC_UPLOAD_URL` | Public base URL for uploaded files |
-| `MEDIA_UPLOAD_URL` | External PHP upload endpoint (production on Vercel) |
+
+App URLs, CORS, and media upload endpoints are in `src/config/app-urls.ts`.
 
 ## Deploy
 
@@ -50,10 +48,6 @@ Set these in your host dashboard before deploy:
 | `JWT_SECRET` | Yes | Long random string (e.g. `openssl rand -hex 32`) |
 | `ADMIN_EMAIL` | Yes | Admin login email (seeded on first boot) |
 | `ADMIN_PASSWORD` | Yes | Admin login password |
-| `CORS_ORIGIN` | Yes | `https://s-oil-corporate.vercel.app,https://s-oil-corporate-dashboard.vercel.app` |
-| `PUBLIC_UPLOAD_URL` | Yes | `https://soil-media.osamaqaseem.online/uploads` |
-| `MEDIA_UPLOAD_URL` | Yes (Vercel) | `https://soil-media.osamaqaseem.online/upload.php` |
-| `UPLOAD_DIR` | No | `uploads` (default) |
 | `PORT` | No | Set automatically on most hosts |
 
 **Vercel:** Project → Settings → Environment Variables → add all required vars for Production, then redeploy.

@@ -3,6 +3,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AppModule } from './app.module';
+import { CORS_ORIGINS } from './config/app-urls';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -17,25 +18,16 @@ async function bootstrap() {
   app.useStaticAssets(join(process.cwd(), process.env.UPLOAD_DIR ?? 'uploads'), {
     prefix: '/uploads',
   });
-  const defaultOrigins = [
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'https://s-oil-corporate-dashboard.vercel.app',
-    'https://s-oil-corporate.vercel.app',
-  ].join(',');
-  const allowed = (process.env.CORS_ORIGIN ?? defaultOrigins)
-    .split(',')
-    .map((o) => o.trim())
-    .filter(Boolean);
+
+  const allowed = [...CORS_ORIGINS];
+
   app.enableCors({
     origin: (
       origin: string | undefined,
       callback: (err: Error | null, allow?: boolean) => void,
     ) => {
-      // Same-origin / server-to-server / mobile webviews sometimes send no Origin
       if (!origin) return callback(null, true);
-      if (allowed.includes(origin)) return callback(null, true);
-      // Vercel preview / staging hosts while custom domains settle
+      if ((allowed as string[]).includes(origin)) return callback(null, true);
       if (/^https:\/\/[\w.-]+\.vercel\.app$/.test(origin)) {
         return callback(null, true);
       }

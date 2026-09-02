@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { randomUUID } from 'crypto';
 import { extname, join } from 'path';
 import { mkdir, writeFile } from 'fs/promises';
+import { MEDIA_PUBLIC_URL, MEDIA_UPLOAD_URL } from '../config/app-urls';
 
 type MediaUploadResponse = {
   success: boolean;
@@ -15,14 +16,12 @@ export class UploadsService {
   constructor(private config: ConfigService) {}
 
   async uploadBuffer(buffer: Buffer, originalName: string, mimeType?: string) {
-    const mediaUploadUrl = this.config.get<string>('MEDIA_UPLOAD_URL')?.trim();
-
-    if (mediaUploadUrl) {
+    if (process.env.NODE_ENV !== 'development') {
       return this.uploadToMediaServer(
         buffer,
         originalName,
         mimeType,
-        mediaUploadUrl,
+        MEDIA_UPLOAD_URL,
       );
     }
 
@@ -72,8 +71,9 @@ export class UploadsService {
     const filename = `${randomUUID()}${extname(originalName).toLowerCase()}`;
     await writeFile(join(dir, filename), buffer);
     const base = (
-      this.config.get<string>('PUBLIC_UPLOAD_URL') ??
-      `http://localhost:${this.config.get<string>('PORT') ?? 4000}/uploads`
+      process.env.NODE_ENV === 'development'
+        ? `http://localhost:${this.config.get<string>('PORT') ?? 4000}/uploads`
+        : MEDIA_PUBLIC_URL
     ).replace(/\/$/, '');
     return { url: `${base}/${filename}` };
   }
