@@ -17,7 +17,13 @@ async function bootstrap() {
   app.useStaticAssets(join(process.cwd(), process.env.UPLOAD_DIR ?? 'uploads'), {
     prefix: '/uploads',
   });
-  const allowed = (process.env.CORS_ORIGIN ?? 'http://localhost:3000,http://localhost:5173')
+  const defaultOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://s-oil-corporate-dashboard.vercel.app',
+    'https://s-oil-corporate.vercel.app',
+  ].join(',');
+  const allowed = (process.env.CORS_ORIGIN ?? defaultOrigins)
     .split(',')
     .map((o) => o.trim())
     .filter(Boolean);

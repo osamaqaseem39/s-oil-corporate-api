@@ -15,7 +15,7 @@ cp .env.example .env
 npm run start:dev
 ```
 
-Runs at `http://localhost:4000` by default.
+Runs at `http://localhost:4000` by default. Production: **https://s-oil-corporate-api.vercel.app/api**
 
 ## Environment
 
@@ -49,12 +49,19 @@ Set these in your host dashboard before deploy:
 | `JWT_SECRET` | Yes | Long random string (e.g. `openssl rand -hex 32`) |
 | `ADMIN_EMAIL` | Yes | Admin login email (seeded on first boot) |
 | `ADMIN_PASSWORD` | Yes | Admin login password |
-| `CORS_ORIGIN` | Yes | `https://your-site.vercel.app,https://your-dashboard.vercel.app` |
-| `PUBLIC_UPLOAD_URL` | Yes | `https://your-api.vercel.app/uploads` |
+| `CORS_ORIGIN` | Yes | `https://s-oil-corporate.vercel.app,https://s-oil-corporate-dashboard.vercel.app` |
+| `PUBLIC_UPLOAD_URL` | Yes | `https://s-oil-corporate-api.vercel.app/uploads` |
 | `UPLOAD_DIR` | No | `uploads` (default) |
 | `PORT` | No | Set automatically on most hosts |
 
 **Vercel:** Project → Settings → Environment Variables → add all required vars for Production, then redeploy.
+
+## Production URLs
+
+| App | URL |
+|-----|-----|
+| API | https://s-oil-corporate-api.vercel.app/api |
+| Website | https://s-oil-corporate.vercel.app |
 
 ## Related repos
 
