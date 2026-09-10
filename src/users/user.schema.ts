@@ -13,6 +13,28 @@ export class User {
 
   @Prop({ default: 'admin' })
   role: string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+export type PublicUser = {
+  id: string;
+  email: string;
+  role: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export function toUser(doc: UserDocument): PublicUser {
+  const o = doc.toObject();
+  return {
+    id: String(o._id),
+    email: o.email,
+    role: o.role,
+    createdAt: o.createdAt ? new Date(o.createdAt).toISOString() : undefined,
+    updatedAt: o.updatedAt ? new Date(o.updatedAt).toISOString() : undefined,
+  };
+}
