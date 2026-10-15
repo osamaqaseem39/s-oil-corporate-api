@@ -1,8 +1,11 @@
 import {
   IsArray,
   IsIn,
+  IsInt,
+  IsNumber,
   IsOptional,
   IsString,
+  Min,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -73,6 +76,21 @@ export class CreateProductDto {
   shopUrl?: string;
 
   @IsOptional()
+  @IsNumber()
+  @Min(0)
+  price?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  cartonPrice?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  cartonUnits?: number;
+
+  @IsOptional()
   @IsIn(['draft', 'published'])
   status?: 'draft' | 'published';
 }
@@ -132,6 +150,21 @@ export class UpdateProductDto {
   @IsOptional()
   @IsString()
   shopUrl?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  price?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  cartonPrice?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  cartonUnits?: number;
 
   @IsOptional()
   @IsIn(['draft', 'published'])

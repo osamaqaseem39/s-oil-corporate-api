@@ -9,9 +9,10 @@ export const PRODUCT_CATEGORIES = [
   'diesel',
   'gear-oil',
   'treatment',
-  'atf',
+  'transmission-fluid',
   'hydraulic-oil',
   'brake-fluid',
+  'grease',
 ] as const;
 
 @Schema({ timestamps: true })
@@ -64,6 +65,18 @@ export class Product {
   @Prop({ default: '' })
   shopUrl: string;
 
+  /** MRP per unit/pack in PKR, incl. GST. 0 = not listed. */
+  @Prop({ default: 0, min: 0 })
+  price: number;
+
+  /** MRP per carton in PKR, incl. GST. 0 = not listed. */
+  @Prop({ default: 0, min: 0 })
+  cartonPrice: number;
+
+  /** Units per carton. 0 = not listed. */
+  @Prop({ default: 0, min: 0 })
+  cartonUnits: number;
+
   @Prop({ default: 'draft', enum: ['draft', 'published'] })
   status: 'draft' | 'published';
 }
@@ -90,6 +103,9 @@ export function toProduct(doc: ProductDocument) {
     datasheetUrl: o.datasheetUrl ?? '#',
     msdsUrl: o.msdsUrl ?? '#',
     shopUrl: o.shopUrl ?? '',
+    price: o.price ?? 0,
+    cartonPrice: o.cartonPrice ?? 0,
+    cartonUnits: o.cartonUnits ?? 0,
     status: o.status,
   };
 }

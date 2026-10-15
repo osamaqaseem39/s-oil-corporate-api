@@ -438,7 +438,7 @@ export const seedProducts: SeedProduct[] = [
     name: 'S-OIL ULTRA GEAR OIL',
     category: 'gear-oil',
     viscosity: 'SAE 140',
-    packSize: 'Contact sales',
+    packSize: '',
     image: img.ultraGearOil_140,
     shortDescription:
       'High-performance heavy-duty gear oil (API GL-4). Formulated from high-quality base oils and advanced additives for automotive heavy-duty transmissions, axles, and final drives where wear and scoring protection and a high level of oil film protection are required.',
@@ -504,6 +504,242 @@ export const seedProducts: SeedProduct[] = [
     status: 'published',
   },
 ];
+
+/** Shown on products created before they had a real photo. */
+export const placeholderImage = '/S-OIL_LOGO-removebg-preview.png';
+const shopHome = 'https://shop.soillubricants.com';
+const newPhoto = (name: string) => `/product latest/${name}.jpg.jpeg`;
+
+/** Copies a seeded product as another pack size of the same oil. */
+function packVariant(
+  baseSlug: string,
+  overrides: { slug: string; packSize: string; image: string },
+): SeedProduct {
+  const base = seedProducts.find((p) => p.slug === baseSlug);
+  if (!base) throw new Error(`Unknown base product: ${baseSlug}`);
+  return {
+    ...base,
+    ...overrides,
+    specs: [
+      ...base.specs.filter((s) => s.label !== 'Pack Size'),
+      { label: 'Pack Size', value: overrides.packSize },
+    ],
+    shopUrl: shopHome,
+  };
+}
+
+function brakeFluid(ml: number): SeedProduct {
+  return {
+    slug: `super-gt-brake-fluid-dot3-${ml}ml`,
+    name: 'S-OIL SUPER GT HYDRAULIC BRAKE FLUID',
+    category: 'brake-fluid',
+    viscosity: 'DOT-3',
+    packSize: `${ml}ml`,
+    image: newPhoto('13'),
+    shortDescription:
+      'S-OIL Super GT Hydraulic Brake Fluid DOT-3 is a high-quality glycol-ether-based hydraulic fluid designed for automotive braking and clutch systems requiring DOT-3 specification. It provides high boiling-point performance, good low-temperature fluidity, corrosion protection and compatibility with brake-system components.',
+    benefits: [
+      'High boiling-point performance for consistent braking',
+      'Good low-temperature fluidity',
+      'Corrosion protection for brake-system components',
+      'Compatible with brake and clutch system seals',
+    ],
+    specs: [
+      { label: 'Specification', value: 'DOT-3' },
+      { label: 'Base', value: 'Glycol-Ether' },
+      { label: 'Pack Size', value: `${ml}ml` },
+    ],
+    usage:
+      'For automotive hydraulic brake and clutch systems requiring DOT-3 fluid. For further information, contact the S-Oil sales team.',
+    ...commonLinks,
+    shopUrl: shopHome,
+    status: 'published',
+  };
+}
+
+/**
+ * Products from the S-Oil brochure / price list (W.E.F. 10.06.2026) that are
+ * not in the original seed. Added once by SeedService.
+ */
+export const priceListProducts: SeedProduct[] = [
+  packVariant('super-gt-s3-5w30-3l', {
+    slug: 'super-gt-s3-5w30-4l',
+    packSize: '4L',
+    image: productLatest(9),
+  }),
+  packVariant('super-gt-s1-20w50-3l', {
+    slug: 'super-gt-s1-20w50-4l',
+    packSize: '4L',
+    image: productLatest(5),
+  }),
+  packVariant('super-gt-motor-oil-20w50-3l', {
+    slug: 'super-gt-motor-oil-20w50-4l',
+    packSize: '4L',
+    image: productLatest(16),
+  }),
+  packVariant('dezo-d1-sae50-8l', {
+    slug: 'dezo-d1-sae50-20l',
+    packSize: '20L',
+    image: newPhoto('07'),
+  }),
+  packVariant('dezo-d1-sae50-8l', {
+    slug: 'dezo-d1-sae50-205l',
+    packSize: '205L',
+    image: newPhoto('07'),
+  }),
+  packVariant('dezo-d2-20w50-10l', {
+    slug: 'dezo-d2-20w50-205l',
+    packSize: '205L',
+    image: newPhoto('08'),
+  }),
+  {
+    slug: 'gear-oil-gl-4-sae-140',
+    name: 'S-OIL ULTRA GEAR OIL',
+    category: 'transmission-fluid',
+    viscosity: 'SAE-140',
+    packSize: '1L',
+    image: newPhoto('10'),
+    shortDescription:
+      'S-Oil Ultra Gear Oil SAE-140 GL-4 is a high performance, heavy duty gear oil, formulated from high quality base oils and advanced additives. This gear oil is designed for automotive heavy-duty transmissions, axles and final drives.',
+    benefits: [],
+    specs: [
+      { label: 'API Rating', value: 'GL-4' },
+      { label: 'Viscosity Grade', value: 'SAE-140' },
+      { label: 'Pack Size', value: '1L' },
+    ],
+    usage:
+      'For automotive heavy-duty transmissions, axles and final drives requiring API GL-4 SAE-140 gear oil. For further information, contact the S-Oil sales team.',
+    ...commonLinks,
+    shopUrl: shopHome,
+    status: 'published',
+  },
+  {
+    slug: 'atf-type-a',
+    name: 'S-OIL AUTOMATIC TRANSMISSION FLUID',
+    category: 'transmission-fluid',
+    viscosity: 'Type A',
+    packSize: '0.946L',
+    image: newPhoto('11'),
+    shortDescription:
+      'Automatic Transmission Fluid designed for use in automotive hydraulic systems, automatic transmissions and power steering. It is engineered to minimize viscosity breakdown and provide excellent lubrication to gears and bushings.',
+    benefits: [
+      'Minimizes viscosity breakdown',
+      'Excellent lubrication of gears and bushings',
+      'Suitable for automatic transmissions, power steering and hydraulic systems',
+    ],
+    specs: [
+      { label: 'Type', value: 'Type A' },
+      { label: 'Pack Size', value: '1 U.S. Quart (0.946 L)' },
+    ],
+    usage:
+      'For automatic transmissions, power steering and automotive hydraulic systems requiring a Type A fluid. For further information, contact the S-Oil sales team.',
+    ...commonLinks,
+    shopUrl: shopHome,
+    status: 'published',
+  },
+  {
+    slug: 'hydraulic-aw-68',
+    name: 'S-OIL HYDRAULIC AW SERIES',
+    category: 'hydraulic-oil',
+    viscosity: '68',
+    packSize: '20L',
+    image: newPhoto('12'),
+    shortDescription:
+      'S-Oil Hydraulic AW range of lubricants are supreme performance anti-wear hydraulic oils formulated with high quality group II base stocks and balanced additive technology. They are designed to work efficiently in hydraulic systems operating under severe conditions.',
+    benefits: [
+      'Anti-wear additives protect pumps and components',
+      'Anti-foaming agents for smooth, stable operation',
+      'High quality Group II base stocks',
+      'Works efficiently under severe operating conditions',
+    ],
+    specs: [
+      { label: 'Grade', value: 'AW 68' },
+      { label: 'Base Oil', value: 'Group II' },
+      { label: 'Pack Size', value: '20L' },
+    ],
+    usage:
+      'For industrial and mobile hydraulic systems requiring an AW 68 anti-wear hydraulic oil. For further information, contact the S-Oil sales team.',
+    ...commonLinks,
+    shopUrl: shopHome,
+    status: 'published',
+  },
+  brakeFluid(200),
+  brakeFluid(350),
+  brakeFluid(500),
+  {
+    slug: 'poly-plus-grease-multi-purpose',
+    name: 'S-OIL POLY-PLUS MULTI-PURPOSE GREASE',
+    category: 'grease',
+    viscosity: 'NLGI-2',
+    packSize: '453g',
+    image: newPhoto('14'),
+    shortDescription:
+      'S-Oil MULTI-PURPOSE POLY-PLUS GREASE NLGI 2 is high-performance thickened grease formulated with high-quality mineral base oils and performance additives. It provides excellent lubrication, wear protection, oxidation stability and resistance to water washout.',
+    benefits: [
+      'Excellent lubrication and wear protection',
+      'Oxidation stability for long service life',
+      'Resistance to water washout',
+      'Heavy duty / fleet use',
+    ],
+    specs: [
+      { label: 'NLGI Grade', value: '2' },
+      { label: 'Type', value: 'Multi-Purpose' },
+      { label: 'Pack Size', value: '453 g' },
+    ],
+    usage:
+      'For bearings and bushings, universal joints, chassis lubrication, hot shoes and mining industries. For further information, contact the S-Oil sales team.',
+    ...commonLinks,
+    shopUrl: shopHome,
+    status: 'published',
+  },
+];
+
+export interface PriceListEntry {
+  /** MRP per unit/pack, PKR incl. GST */
+  price: number;
+  /** MRP per carton, PKR incl. GST */
+  cartonPrice: number;
+  cartonUnits: number;
+}
+
+export const PRICE_LIST_ID = 'catalog-2026-06-10-v2';
+
+/** Total Lubricants Pakistan MRP/consumer price list, W.E.F. 10.06.2026. */
+export const priceList: Record<string, PriceListEntry> = {
+  // MCO
+  'super-gt-motorcycle-oil-20w40-0-7l': { price: 840, cartonPrice: 10080, cartonUnits: 12 },
+  'super-gt-motorcycle-oil-20w50-0-7l': { price: 840, cartonPrice: 10080, cartonUnits: 12 },
+  'super-gt-motor-oil-4t-20w50-1l': { price: 1180, cartonPrice: 14160, cartonUnits: 12 },
+  // PCMO
+  'super-gt-s3-5w30-3l': { price: 6940, cartonPrice: 27760, cartonUnits: 4 },
+  'super-gt-s3-5w30-4l': { price: 9250, cartonPrice: 37000, cartonUnits: 4 },
+  'super-gt-s2-10w40-3l': { price: 6410, cartonPrice: 25640, cartonUnits: 4 },
+  'super-gt-s2-10w40-4l': { price: 8547, cartonPrice: 34188, cartonUnits: 4 },
+  'super-gt-s1-20w50-3l': { price: 5650, cartonPrice: 22600, cartonUnits: 4 },
+  'super-gt-s1-20w50-4l': { price: 7530, cartonPrice: 30120, cartonUnits: 4 },
+  'super-gt-motor-oil-20w50-1l': { price: 1375, cartonPrice: 16500, cartonUnits: 12 },
+  'super-gt-motor-oil-20w50-3l': { price: 4105, cartonPrice: 24630, cartonUnits: 6 },
+  'super-gt-motor-oil-20w50-4l': { price: 5470, cartonPrice: 21880, cartonUnits: 4 },
+  // HDDO
+  'dezo-d1-sae50-4l': { price: 4730, cartonPrice: 18922, cartonUnits: 4 },
+  'dezo-d1-sae50-8l': { price: 9418, cartonPrice: 9418, cartonUnits: 1 },
+  'dezo-d1-sae50-20l': { price: 23544, cartonPrice: 23544, cartonUnits: 1 },
+  'dezo-d1-sae50-205l': { price: 232470, cartonPrice: 232470, cartonUnits: 1 },
+  'dezo-d2-20w50-1l': { price: 1255, cartonPrice: 15060, cartonUnits: 12 },
+  'dezo-d2-20w50-4l': { price: 5000, cartonPrice: 20000, cartonUnits: 4 },
+  'dezo-d2-20w50-8l': { price: 9998, cartonPrice: 9998, cartonUnits: 1 },
+  'dezo-d2-20w50-10l': { price: 12500, cartonPrice: 12500, cartonUnits: 1 },
+  'dezo-d2-20w50-205l': { price: 247968, cartonPrice: 247968, cartonUnits: 1 },
+  // UHD / Misc.
+  'gear-oil-gl-4-sae-140': { price: 1265, cartonPrice: 15180, cartonUnits: 12 },
+  'atf-type-a': { price: 1065, cartonPrice: 12780, cartonUnits: 12 },
+  'premium-petroleum-treatment-444ml': { price: 855, cartonPrice: 20520, cartonUnits: 24 },
+  'hydraulic-aw-68': { price: 20000, cartonPrice: 20000, cartonUnits: 1 },
+  'super-gt-brake-fluid-dot3-200ml': { price: 249, cartonPrice: 5976, cartonUnits: 24 },
+  'super-gt-brake-fluid-dot3-350ml': { price: 367, cartonPrice: 8808, cartonUnits: 24 },
+  'super-gt-brake-fluid-dot3-500ml': { price: 498, cartonPrice: 11928, cartonUnits: 24 },
+  'poly-plus-grease-multi-purpose': { price: 543, cartonPrice: 6515, cartonUnits: 12 },
+};
 
 interface SeedBlogPost {
   slug: string;

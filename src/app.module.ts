@@ -9,6 +9,7 @@ import { BlogModule } from './blog/blog.module';
 import { CatalogModule } from './catalog/catalog.module';
 import { UploadsModule } from './uploads/uploads.module';
 import { EnquiriesModule } from './enquiries/enquiries.module';
+import { DealersModule } from './dealers/dealers.module';
 import { SeedModule } from './seed/seed.module';
 import { HealthController } from './health.controller';
 
@@ -30,6 +31,7 @@ import { HealthController } from './health.controller';
     CatalogModule,
     UploadsModule,
     EnquiriesModule,
+    DealersModule,
     SeedModule,
   ],
   controllers: [HealthController],
